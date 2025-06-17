@@ -65,6 +65,10 @@ st.subheader("☁️ Visualisasi WordCloud Berdasarkan Label")
 try:
     df = pd.read_csv("anime_romance_reviews.csv")
 
+    if 'label' not in df.columns:
+    df["skor"] = df["skor"].astype(str).str.extract(r"(\d+)").astype(float)
+    df["label"] = df["skor"].apply(lambda x: "Suka" if x >= 7 else "Tidak Suka")
+
     # Pastikan teks sudah dibersihkan
     if "ulasan_clean" not in df.columns:
         df["ulasan_clean"] = df["ulasan"].astype(str).apply(clean_text)
